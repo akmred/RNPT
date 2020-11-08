@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rnpt.MainActivity;
 import com.example.rnpt.R;
 import com.example.rnpt.adapters.ListRNPTAdapter;
+import com.example.rnpt.fragments.dialogfragment.DialogEditRnpt;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -56,7 +57,6 @@ public class Fragment_list_rnpt extends Fragment {
         // Заполняем форму
         fillInDataOnForm(view);
 
-
     }
 
     private void initializationVariable(View view) {
@@ -73,7 +73,12 @@ public class Fragment_list_rnpt extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.addItem("new RNPT");
+
+                //adapter.addItem("new RNPT");
+                // Вызываем диалог с новым добавлением РНПТ
+                DialogEditRnpt dialogEditRnpt = new DialogEditRnpt(0);
+                dialogEditRnpt.show(getFragmentManager(), "DialogCustom");
+
             }
         });
 
@@ -97,4 +102,9 @@ public class Fragment_list_rnpt extends Fragment {
     private void fillInDataOnForm(View view) {
     }
 
+    public void onDialogResultNewElement(String edit_rnpt, String ok) {
+
+        adapter.addItem(edit_rnpt);
+
+    }
 }

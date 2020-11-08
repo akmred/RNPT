@@ -112,15 +112,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.context_menu, menu);
-//    }
-
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -147,6 +138,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void open_RNPT(){
+
+    }
+
+    public void onDialogResult(String edit_rnpt, String ok) {
+
 
     }
 }
