@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_token_master"
+            android:icon="@android:drawable/ic_lock_idle_charging"
+            android:title="@string/master_token" />
+        <item
+            android:id="@+id/nav_list_rnpt"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/list_rnpt" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="@string/settings" />
+    </group>
+
+</menu>

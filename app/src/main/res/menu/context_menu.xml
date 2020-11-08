@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Add"
+        app:showAsAction="ifRoom"
+        android:id="@+id/add_context"/>
+    <item android:title="Update" android:id="@+id/update_context"/>
+    <item android:title="Remove" android:id="@+id/remove_context"/>
+    <item android:title="Clear" android:id="@+id/clear_context"/>
+</menu>
