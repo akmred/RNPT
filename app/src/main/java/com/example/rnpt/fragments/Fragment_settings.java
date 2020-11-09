@@ -22,6 +22,13 @@ public class Fragment_settings extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         // Инициализиуем переменные
         initializationVariable(view);
         // Заполняем реквизиты тестовыми данными
@@ -29,13 +36,13 @@ public class Fragment_settings extends Fragment {
         // Заполняем форму
         fillInDataOnForm(view);
 
-        return view;
     }
 
     private void initializationVariable(View view) {
 
         editText_company_name = view.findViewById(R.id.company_name);
         editText_url_service = view.findViewById(R.id.url_service_fns);
+
 
     }
 

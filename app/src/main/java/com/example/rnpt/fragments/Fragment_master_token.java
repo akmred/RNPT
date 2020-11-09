@@ -23,14 +23,20 @@ public class Fragment_master_token extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_master_token, container, false);
 
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         // Инициализиуем переменные
         initializationVariable(view);
         // Заполняем реквизиты тестовыми данными
         setTestingData();
         // Заполняем форму
         fillInDataOnForm(view);
-
-        return view;
 
     }
 
@@ -51,5 +57,6 @@ public class Fragment_master_token extends Fragment {
     private void initializationVariable(View view) {
         editText_key_master_token = view.findViewById(R.id.key_master_token);
         editText_url_service = view.findViewById(R.id.url_service);
+
     }
 }
