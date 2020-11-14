@@ -1,5 +1,6 @@
 package com.example.rnpt.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.telephony.RadioAccessSpecifier;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +47,7 @@ public class Fragment_list_rnpt extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_rnpt, container, false);
 
         return view;
+
     }
 
     @Override
@@ -66,7 +69,7 @@ public class Fragment_list_rnpt extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_list_rnpt.setLayoutManager(layoutManager);
 
-        adapter = new ListRNPTAdapter(initData(), activity);
+        adapter = new ListRNPTAdapter(initData(), activity, requireActivity());
         recycler_list_rnpt.setAdapter(adapter);
 
         FloatingActionButton fab = view.findViewById(R.id.fab);

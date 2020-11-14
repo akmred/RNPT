@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity
                 fragmentTransaction.commit();
                 close_drawer();
                 return true;
+
             case R.id.nav_list_rnpt:
 
                 Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
                 fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
                 fragmentTransaction.commit();
                 close_drawer();
-
                 return true;
 
             case R.id.nav_settings:
