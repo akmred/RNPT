@@ -25,6 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rnpt.MainActivity;
 import com.example.rnpt.R;
 import com.example.rnpt.adapters.ListRNPTAdapter;
+import com.example.rnpt.connection.authorization.AutorizationFNS;
+import com.example.rnpt.connection.authorization.CenterConnectionAutorization;
+import com.example.rnpt.connection.authorization.ConvertDataAnswerCenterConnection;
+import com.example.rnpt.connection.authorization.DataAuthorization;
 import com.example.rnpt.fragments.dialogfragment.DialogEditRnpt;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +39,7 @@ public class Fragment_list_rnpt extends Fragment {
 
     private ListRNPTAdapter adapter;
     Activity activity;
+    AutorizationFNS autorizationFNS;
 
     public Fragment_list_rnpt(Activity activity) {
         this.activity = activity;
@@ -73,6 +78,13 @@ public class Fragment_list_rnpt extends Fragment {
         recycler_list_rnpt.setAdapter(adapter);
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
+        OnClickListener(fab);
+
+        autorizationFNS = new AutorizationFNS();
+
+    }
+
+    private void OnClickListener(FloatingActionButton fab) {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +96,6 @@ public class Fragment_list_rnpt extends Fragment {
 
             }
         });
-
     }
 
 
