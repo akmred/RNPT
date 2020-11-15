@@ -12,9 +12,10 @@ public class ConvertDataAnswerCenterConnection {
     Handler handler;
     private OnRequerConvertAnswer listener;
 
-    public ConvertDataAnswerCenterConnection(String content) {
+    public ConvertDataAnswerCenterConnection(String content, OnRequerConvertAnswer listener) {
 
         this.content = content;
+        this.listener = listener;
 
         handlerThread = new HandlerThread("HandleThread");
         handlerThread.start();
@@ -37,6 +38,7 @@ public class ConvertDataAnswerCenterConnection {
 
     interface OnRequerConvertAnswer{
         void onComplete(DataAuthorization dataAuthorization);
+        void onError(String textError);
 
     }
 }

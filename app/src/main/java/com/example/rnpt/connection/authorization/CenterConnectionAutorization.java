@@ -22,8 +22,12 @@ public class CenterConnectionAutorization {
     final String URL = "http://localhost:8087/mock/consumer/authService";
     final  String MASTER_TOKEN = "4WKOCoOLArPnF1ijCkQBH6CKNWeO2cfBvZlWJqNCpnuopMD0ISGSefPGILAQI2n4rntacA3X1oc1QCHuYOG0zx6M0wGE7x9saHMJdBIJnUyL4ePu7pvK4UBq0OMp00DS";
     private OnResponseCompleted listener;
-    
-    public CenterConnectionAutorization() {
+
+
+    public CenterConnectionAutorization(OnResponseCompleted listener) {
+
+        this.listener = listener;
+
         handlerThread = new HandlerThread("HandlerThread");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
@@ -31,7 +35,7 @@ public class CenterConnectionAutorization {
 
     }
 
-    public Response postmessage(){
+    public void postmessage(){
 
         try {
                  sendMessage();
@@ -39,7 +43,6 @@ public class CenterConnectionAutorization {
             e.printStackTrace();
         }
         
-        return response;
     }
 
     private void sendMessage() throws IOException {
@@ -49,7 +52,8 @@ public class CenterConnectionAutorization {
         MediaType mediaType = MediaType.parse("text/xml;charset=UTF-8");
         RequestBody body = RequestBody.create(mediaType, "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <ns0:GetMessageRequest xmlns:ns0=\"urn://x-artefacts-gnivc-ru/inplat/servin/OpenApiMessageConsumerService/types/1.0\">\r\n\t\t\t<ns0:Message>\r\n\t\t\t\t<ns1:AuthRequest xmlns:ns1=\"urn://x-artefacts-gnivc-ru/ais3/kkt/AuthService/types/1.0\">\r\n\t\t\t\t\t<ns1:AuthAppInfo>\r\n\t\t\t\t\t\t<ns1:MasterToken>4WKOCoOLArPnF1ijCkQBH6CKNWeO2cfBvZlWJqNCpnuopMD0ISGSefPGILAQI2n4rntacA3X1oc1QCHuYOG0zx6M0wGE7x9saHMJdBIJnUyL4ePu7pvK4UBq0OMp00DS</ns1:MasterToken>\r\n\t\t\t\t\t</ns1:AuthAppInfo>\r\n\t\t\t\t</ns1:AuthRequest>\r\n\t\t\t</ns0:Message>\r\n\t\t</ns0:GetMessageRequest>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>");
         Request request = new Request.Builder()
-                .url("http://localhost:8087/mock/consumer/authService")
+                //  .url("http://localhost:8087/mock/consumer/authService")
+                  .url("http://10.0.2.2:8087/mock/consumer/authService")
                 .method("POST", body)
                 .addHeader("SOAPAction", "urn:GetMessageRequest")
                 .addHeader("User-Agent", "Apache-HttpClient/4.1.1 (java 1.5)")
@@ -62,6 +66,13 @@ public class CenterConnectionAutorization {
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onError("123");
+                    }
+                });
 
             }
 
@@ -91,6 +102,7 @@ public class CenterConnectionAutorization {
     
     public interface OnResponseCompleted{
         void onCompleted(String content);
+        void onError(String textError);
     }
     
 }
