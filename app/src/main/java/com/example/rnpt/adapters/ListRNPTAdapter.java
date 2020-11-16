@@ -2,8 +2,8 @@ package com.example.rnpt.adapters;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rnpt.R;
@@ -31,10 +35,12 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
     private int menuPosition;
     private int selectedPosition = -1;
     TextView textElement;
+    FragmentActivity context;
 
-    public ListRNPTAdapter(List<String> data, Activity activity) {
+    public ListRNPTAdapter(List<String> data, Activity activity, FragmentActivity context) {
         this.data = data;
         this.activity = activity;
+        this.context = context;
     }
 
     @NonNull
@@ -45,6 +51,7 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
 
         return new ViewHolder(view);
     }
+
 
     public TextView getTextElement(){
         return textElement;
@@ -59,15 +66,25 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
         setOnItemClickBehavior(textElement, position);
         highligthSelectedPosition(textElement, position);
 
-//        textElement.setOnLongClickListener((view)-> {
-//            menuPosition = position;
-//            return false;
-//        });
-//
-//
-//        if (activity != null){
-//            activity.registerForContextMenu(textElement);
-//        }
+        setOnItemLongClickBehavior();
+
+    }
+
+    private void setOnItemLongClickBehavior() {
+        textElement.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+
+                FragmentOpenRNPT fragmentOpenRNPT = new FragmentOpenRNPT(data.get(selectedPosition));
+                FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.context_main, fragmentOpenRNPT);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+                return false;
+            }
+        });
     }
 
 
@@ -75,6 +92,7 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
         if(position == selectedPosition){
             int color = ContextCompat.getColor(activity, R.color.teal_200);
             textElement.setBackgroundColor(color);
+
         }else {
             int color = ContextCompat.getColor(activity, android.R.color.transparent);
             textElement.setBackgroundColor(color);

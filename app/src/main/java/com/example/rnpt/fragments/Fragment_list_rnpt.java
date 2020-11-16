@@ -1,5 +1,6 @@
 package com.example.rnpt.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.telephony.RadioAccessSpecifier;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rnpt.MainActivity;
 import com.example.rnpt.R;
 import com.example.rnpt.adapters.ListRNPTAdapter;
+import com.example.rnpt.connection.authorization.AutorizationFNS;
+import com.example.rnpt.connection.authorization.CenterConnectionAutorization;
+import com.example.rnpt.connection.authorization.ConvertDataAnswerCenterConnection;
+import com.example.rnpt.connection.authorization.DataAuthorization;
 import com.example.rnpt.fragments.dialogfragment.DialogEditRnpt;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -33,6 +39,7 @@ public class Fragment_list_rnpt extends Fragment {
 
     private ListRNPTAdapter adapter;
     Activity activity;
+    AutorizationFNS autorizationFNS;
 
     public Fragment_list_rnpt(Activity activity) {
         this.activity = activity;
@@ -45,6 +52,7 @@ public class Fragment_list_rnpt extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_rnpt, container, false);
 
         return view;
+
     }
 
     @Override
@@ -66,10 +74,17 @@ public class Fragment_list_rnpt extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_list_rnpt.setLayoutManager(layoutManager);
 
-        adapter = new ListRNPTAdapter(initData(), activity);
+        adapter = new ListRNPTAdapter(initData(), activity, requireActivity());
         recycler_list_rnpt.setAdapter(adapter);
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
+        OnClickListener(fab);
+
+        autorizationFNS = new AutorizationFNS();
+
+    }
+
+    private void OnClickListener(FloatingActionButton fab) {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +96,6 @@ public class Fragment_list_rnpt extends Fragment {
 
             }
         });
-
     }
 
 
