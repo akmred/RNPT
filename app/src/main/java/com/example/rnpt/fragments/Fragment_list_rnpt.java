@@ -22,9 +22,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rnpt.App;
 import com.example.rnpt.MainActivity;
 import com.example.rnpt.R;
 import com.example.rnpt.adapters.ListRNPTAdapter;
+import com.example.rnpt.base.RNPTSource;
+import com.example.rnpt.base.dao.RnptDao;
+import com.example.rnpt.base.model.RNPT;
 import com.example.rnpt.connection.authorization.AutorizationFNS;
 import com.example.rnpt.connection.authorization.CenterConnectionAutorization;
 import com.example.rnpt.connection.authorization.ConvertDataAnswerCenterConnection;
@@ -40,6 +44,7 @@ public class Fragment_list_rnpt extends Fragment {
     private ListRNPTAdapter adapter;
     Activity activity;
     AutorizationFNS autorizationFNS;
+    private RNPTSource rnptSource;
 
     public Fragment_list_rnpt(Activity activity) {
         this.activity = activity;
@@ -74,7 +79,13 @@ public class Fragment_list_rnpt extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         recycler_list_rnpt.setLayoutManager(layoutManager);
 
-        adapter = new ListRNPTAdapter(initData(), activity, requireActivity());
+        RnptDao rnptDao = App
+                .getInstance()
+                .getRnptDao();
+
+        rnptSource = new RNPTSource(rnptDao);
+
+        adapter = new ListRNPTAdapter(rnptSource, activity, requireActivity());
         recycler_list_rnpt.setAdapter(adapter);
 
         FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -99,18 +110,27 @@ public class Fragment_list_rnpt extends Fragment {
     }
 
 
-    private List<String> initData() {
+    private void initData() {
 
-        List<String> list = new ArrayList<>();
+        if (rnptSource.getCountRnpts() == 0) {
 
-        for (int i = 0; i < 7; i++){
-            list.add(String.format("EMUL2030/260917/0080123/0%d", i));
+            for (int i = 0; i < 7; i++) {
+
+                RNPT rnpt = new RNPT();
+                rnpt.NameRnpt = String.format("EMUL2030/260917/0080123/0%d", i);
+                rnpt.DataReceived = false;
+
+                rnptSource.addRNPT(rnpt);
+
+            }
+
         }
 
-        return list;
     }
 
     private void setTestingData() {
+
+        initData();
     }
 
     private void fillInDataOnForm(View view) {
