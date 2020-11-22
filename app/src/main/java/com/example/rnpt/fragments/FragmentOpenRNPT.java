@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.rnpt.R;
+import com.example.rnpt.connection.authorization.ConvertDataAnswerCenterConnection;
+import com.example.rnpt.connection.getpost.CenterConnectionRnpt;
+import com.example.rnpt.connection.getpost.model.getid.ResponseInfo;
 
 public class FragmentOpenRNPT extends Fragment {
     String stringRNPT;
@@ -35,10 +38,26 @@ public class FragmentOpenRNPT extends Fragment {
 
         // Инициализиуем переменные
         initializationVariable(view);
+        initializationRequest();
         // Заполняем реквизиты тестовыми данными
         setTestingData();
         // Заполняем форму
         fillInDataOnForm(view);
+
+    }
+
+    // Выполняем асихронный запрос к сервису ФНС
+    private void initializationRequest() {
+
+        CenterConnectionRnpt convertDataAnswerCenterConnection= new CenterConnectionRnpt(stringRNPT, getActivity());
+        convertDataAnswerCenterConnection.infoCheck();
+
+    }
+
+    // При получении информации по РНППТ вызывается эта процедура
+    public void downLoadInfoRNPT(ResponseInfo responseInfo){
+
+        System.out.println("Здесь загружаем в фрагмент информацию по РНПТ");
 
     }
 
