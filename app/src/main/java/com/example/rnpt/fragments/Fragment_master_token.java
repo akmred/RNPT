@@ -1,6 +1,9 @@
 package com.example.rnpt.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ public class Fragment_master_token extends Fragment {
     EditText editText_key_master_token, editText_url_service;
     String URL_SERVICE, KEY_MASTER_TOKEN;
 
+    private  static  final String TAG = "cat";
 
     @Nullable
     @Override
@@ -38,13 +42,43 @@ public class Fragment_master_token extends Fragment {
         // Заполняем форму
         fillInDataOnForm(view);
 
+        Log.e(TAG, "onViewCreate");
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("URL_SERVICE", editText_url_service.getText().toString());
+        editor.putString("KEY_MASTER_TOKEN", editText_key_master_token.getText().toString());
+        editor.commit();
+
+        Log.e(TAG, "onDestroy");
+
     }
 
     private void fillInDataOnForm(View view) {
 
-        editText_url_service.setText(URL_SERVICE);
-        editText_key_master_token.setText(KEY_MASTER_TOKEN);
+        // для получения настроек нет необходимости в Editor, получаем их прямо из SharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String value_url = sharedPreferences.getString("URL_SERVICE", "null");
+        String value_token = sharedPreferences.getString("KEY_MASTER_TOKEN", "null");
 
+        if (value_url != "null"){
+
+            editText_url_service.setText(value_url);
+            editText_key_master_token.setText(value_token);
+
+        }else {
+
+            editText_url_service.setText(URL_SERVICE);
+            editText_key_master_token.setText(KEY_MASTER_TOKEN);
+        }
     }
 
     private void setTestingData() {

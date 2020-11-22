@@ -20,6 +20,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rnpt.R;
+import com.example.rnpt.base.RNPTSource;
+import com.example.rnpt.base.model.RNPT;
 import com.example.rnpt.fragments.FragmentOpenRNPT;
 import com.example.rnpt.fragments.Fragment_list_rnpt;
 import com.example.rnpt.fragments.Fragment_settings;
@@ -30,15 +32,15 @@ import java.util.Objects;
 
 public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHolder>{
 
-    private List<String> data;
     private Activity activity;
     private int menuPosition;
     private int selectedPosition = -1;
     TextView textElement;
     FragmentActivity context;
+    private RNPTSource dataSource;
 
-    public ListRNPTAdapter(List<String> data, Activity activity, FragmentActivity context) {
-        this.data = data;
+    public ListRNPTAdapter(RNPTSource dataSource, Activity activity, FragmentActivity context) {
+        this.dataSource = dataSource;
         this.activity = activity;
         this.context = context;
     }
@@ -60,8 +62,12 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        // Заполнение данными записи на экране
+        List<RNPT> rnpts = dataSource.getRnpts();
+        RNPT rnpt = rnpts.get(position);
+
         textElement = holder.getTextElement();
-        textElement.setText(data.get(position));
+        textElement.setText(rnpt.NameRnpt);
 
         setOnItemClickBehavior(textElement, position);
         highligthSelectedPosition(textElement, position);
@@ -75,8 +81,7 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
             @Override
             public boolean onLongClick(View v) {
 
-
-                FragmentOpenRNPT fragmentOpenRNPT = new FragmentOpenRNPT(data.get(selectedPosition));
+                FragmentOpenRNPT fragmentOpenRNPT = new FragmentOpenRNPT(dataSource.getRnpts().get(selectedPosition).NameRnpt);
                 FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.context_main, fragmentOpenRNPT);
                 fragmentTransaction.addToBackStack(null);
@@ -86,7 +91,6 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
             }
         });
     }
-
 
     private void highligthSelectedPosition(TextView textElement, int position) {
         if(position == selectedPosition){
@@ -109,24 +113,29 @@ public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return data == null ? 0: data.size();
+        return dataSource.getCountRnpts();
     }
 
     public void addItem(String element){
-        data.add(element);
-        notifyItemInserted(data.size()-1);
+
+        RNPT rnpt = new RNPT();
+        rnpt.NameRnpt = element;
+        rnpt.DataReceived = false;
+
+        dataSource.addRNPT(rnpt);
+        notifyItemInserted(dataSource.getCountRnpts()-1);
     }
 
 
-    void removeItem(int position){
-        data.remove(position);
-        notifyItemRemoved(position);
-    }
+//    void removeItem(int position){
+//        data.remove(position);
+//        notifyItemRemoved(position);
+//    }
 
-    void clearItems(){
-        data.clear();
-        notifyDataSetChanged();
-    }
+//    void clearItems(){
+//        data.clear();
+//        notifyDataSetChanged();
+//    }
 
 
     // класс ViewHolder
