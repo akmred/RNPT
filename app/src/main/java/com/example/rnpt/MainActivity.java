@@ -114,13 +114,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initGetToken(){
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener((task) -> {
-                    if (!task.isSuccessful()){
-                        Log.w("PushMessage", "getInstanceId failed", task.getException());
-                        return;
-                    }
-                });
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener((task) -> {
+//                    if (!task.isSuccessful()){
+//                        Log.w("PushMessage", "getInstanceId failed", task.getException());
+//                        return;
+//                    }
+//                });
 
     }
 
