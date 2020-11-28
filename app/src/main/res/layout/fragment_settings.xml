@@ -69,4 +69,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/static_url_service"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonDefineLocate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Определить местоположение"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.658"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/url_service_fns"
+        app:layout_constraintVertical_bias="0.819" />
+
+    <TextView
+        android:id="@+id/textViewLocate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="locate"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDefineLocate"
+        app:layout_constraintVertical_bias="0.031" />
+
+    <Button
+        android:id="@+id/buttonPushLocate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Push"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toEndOf="@+id/textViewLocate"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDefineLocate"
+        app:layout_constraintVertical_bias="0.033" />
 </androidx.constraintlayout.widget.ConstraintLayout>
