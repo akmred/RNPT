@@ -1,13 +1,23 @@
 package com.example.rnpt;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,11 +33,20 @@ import com.example.rnpt.fragments.FragmentOpenRNPT;
 import com.example.rnpt.fragments.Fragment_list_rnpt;
 import com.example.rnpt.fragments.Fragment_master_token;
 import com.example.rnpt.fragments.Fragment_settings;
+import com.example.rnpt.receivers.BattetyReceiver;
+import com.example.rnpt.receivers.NoConnection;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ListView listView;
+    private BroadcastReceiver batteryReceiver = new BattetyReceiver();
+    private BroadcastReceiver noConnection = new NoConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +60,14 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
         fragmentTransaction.commit();
         close_drawer();
+
+        // Программная регистрация ресивера баттареи
+        this.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
+        // Программная регистрация ресивера нет сети
+        this.registerReceiver(noConnection, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        initGetToken();
+        initNotificationChannel();
 
     }
 
@@ -78,6 +105,25 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.unregisterReceiver(batteryReceiver);
+        this.unregisterReceiver(noConnection);
+    }
+
+    private void initGetToken(){
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener((task) -> {
+//                    if (!task.isSuccessful()){
+//                        Log.w("PushMessage", "getInstanceId failed", task.getException());
+//                        return;
+//                    }
+//                });
+
+    }
+
     private void close_drawer() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -99,6 +145,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         return toolbar;
+    }
+
+    private void initNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel channel = new NotificationChannel("2", "name", importance);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
