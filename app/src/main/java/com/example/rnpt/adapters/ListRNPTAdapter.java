@@ -1,21 +1,14 @@
 package com.example.rnpt.adapters;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +16,8 @@ import com.example.rnpt.R;
 import com.example.rnpt.base.RNPTSource;
 import com.example.rnpt.base.model.RNPT;
 import com.example.rnpt.fragments.FragmentOpenRNPT;
-import com.example.rnpt.fragments.Fragment_list_rnpt;
-import com.example.rnpt.fragments.Fragment_settings;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class ListRNPTAdapter extends RecyclerView.Adapter<ListRNPTAdapter.ViewHolder>{
 
