@@ -35,12 +35,16 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver batteryReceiver = new BattetyReceiver();
     private BroadcastReceiver noConnection = new NoConnection();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = initToolbar();
         initDrawer(toolbar);
+
+
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
