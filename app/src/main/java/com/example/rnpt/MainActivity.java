@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.nav_settings:
-                Fragment_settings fragment_settings = new Fragment_settings();
+                Fragment_settings fragment_settings = new Fragment_settings(this);
                 fragmentTransaction.replace(R.id.context_main, fragment_settings);
                 fragmentTransaction.commit();
                 close_drawer();
