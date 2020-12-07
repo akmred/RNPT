@@ -16,6 +16,10 @@ public class Fragment_settings extends Fragment {
     EditText editText_company_name, editText_url_service;
     String company, url_service;
 
+    public Fragment_settings(){
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

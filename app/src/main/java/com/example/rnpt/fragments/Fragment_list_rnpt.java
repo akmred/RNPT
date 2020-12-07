@@ -46,6 +46,10 @@ public class Fragment_list_rnpt extends Fragment {
     AutorizationFNS autorizationFNS;
     private RNPTSource rnptSource;
 
+    public Fragment_list_rnpt() {
+
+    }
+
     public Fragment_list_rnpt(Activity activity) {
         this.activity = activity;
     }
