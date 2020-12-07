@@ -22,6 +22,7 @@ import android.widget.ListView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.rnpt.fragments.Fragment_auth_google;
 import com.example.rnpt.fragments.Fragment_list_rnpt;
 import com.example.rnpt.fragments.Fragment_master_token;
 import com.example.rnpt.fragments.Fragment_settings;
@@ -41,16 +42,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = initToolbar();
-        initDrawer(toolbar);
-
-
+//        Toolbar toolbar = initToolbar();
+        //initDrawer(toolbar);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
-        fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
+        Fragment_auth_google fragment_auth_google = new Fragment_auth_google(this);
+        fragmentTransaction.replace(R.id.context_main, fragment_auth_google);
         fragmentTransaction.commit();
         close_drawer();
+
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
+//        fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
+//        fragmentTransaction.commit();
+//        close_drawer();
 
         // Программная регистрация ресивера баттареи
         this.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
@@ -59,6 +64,19 @@ public class MainActivity extends AppCompatActivity
 
         initGetToken();
         initNotificationChannel();
+
+    }
+
+    public void inLoggingGoogle(){
+
+        Toolbar toolbar = initToolbar();
+        initDrawer(toolbar);
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
+        fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
+        fragmentTransaction.commit();
+        close_drawer();
 
     }
 

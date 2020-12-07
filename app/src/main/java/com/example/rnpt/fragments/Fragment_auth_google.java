@@ -12,8 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.rnpt.MainActivity;
 import com.example.rnpt.R;
+import com.example.rnpt.connection.getpost.CenterConnectionRnpt;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -60,6 +63,18 @@ public class Fragment_auth_google extends Fragment {
         // Инициализиуем переменные
         initializationVariable(view);
 
+        // Пробуем автоматически зайти
+        if (checkLoggingIn()) {
+            checkCurrentFragment();
+        }
+
+    }
+
+    // Переключение на другой фрагмент
+    private void checkCurrentFragment() {
+
+        ((MainActivity)getActivity()).inLoggingGoogle();
+
     }
 
     //https://developers.google.com/identity/sign-in/android/backend-auth?authuser=1
@@ -71,6 +86,9 @@ public class Fragment_auth_google extends Fragment {
             // Регистрация прошла успешно
             disableSign();
             updateUI(account.getEmail());
+
+            checkCurrentFragment();
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
