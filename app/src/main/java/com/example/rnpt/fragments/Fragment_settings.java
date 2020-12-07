@@ -1,20 +1,34 @@
 package com.example.rnpt.fragments;
 
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.rnpt.R;
+import com.example.rnpt.maps.MainMaps;
 
 public class Fragment_settings extends Fragment {
     EditText editText_company_name, editText_url_service;
     String company, url_service;
+    Button bLocateMySpase, buttonPushLocate;
+    Activity activity;
+    TextView textViewLocate;
+
+    public Fragment_settings(Activity activity) {
+        this.activity = activity;
+    }
 
     public Fragment_settings(){
 
@@ -35,6 +49,10 @@ public class Fragment_settings extends Fragment {
 
         // Инициализиуем переменные
         initializationVariable(view);
+
+        //set Listener
+        setListeners();
+
         // Заполняем реквизиты тестовыми данными
         setTestingData();
         // Заполняем форму
@@ -42,11 +60,43 @@ public class Fragment_settings extends Fragment {
 
     }
 
+    private void setListeners() {
+
+        bLocateMySpase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MainMaps mainMaps = new MainMaps(activity, textViewLocate);
+
+
+            }
+        });
+
+        buttonPushLocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int messageId = 0;
+                // создать нотификацию
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, "2")
+                        .setContentTitle("locate")
+                        .setContentText(textViewLocate.getText());
+                NotificationManager notificationManager =
+                        (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(messageId++, builder.build());
+
+
+            }
+        });
+    }
+
     private void initializationVariable(View view) {
 
         editText_company_name = view.findViewById(R.id.company_name);
         editText_url_service = view.findViewById(R.id.url_service_fns);
-
+        bLocateMySpase = view.findViewById(R.id.buttonDefineLocate);
+        textViewLocate = view.findViewById(R.id.textViewLocate);
+        buttonPushLocate = view.findViewById(R.id.buttonPushLocate);
 
     }
 
