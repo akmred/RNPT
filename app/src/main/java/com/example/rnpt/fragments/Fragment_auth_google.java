@@ -47,6 +47,23 @@ public class Fragment_auth_google extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        enableSign();
+        // Проверим, заходил ли пользователь в этом приложении через Гугл
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        if (account != null) {
+            // Пользователь уже заходил, сделаем кнопку недоступной
+            disableSign();
+            // Обновим почтовый адрес этого пользователя и выведем его на экран
+            updateUI(account.getEmail());
+        }
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,6 +94,18 @@ public class Fragment_auth_google extends Fragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            // Когда сюда возвращается Task, результаты по нему уже готовы.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+
+    }
+
     //https://developers.google.com/identity/sign-in/android/backend-auth?authuser=1
     // Получение данных пользователя
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -94,6 +123,7 @@ public class Fragment_auth_google extends Fragment {
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
+
     }
 
     public boolean checkLoggingIn(){
