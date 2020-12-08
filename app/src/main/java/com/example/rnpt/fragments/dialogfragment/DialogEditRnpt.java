@@ -20,6 +20,9 @@ import com.example.rnpt.messages.MessageUsersError;
 public class DialogEditRnpt extends DialogFragment {
     private int position;
 
+    public DialogEditRnpt() {
+
+    }
     public DialogEditRnpt(int position) {
         this.position = position;
     }

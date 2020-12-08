@@ -18,6 +18,10 @@ import com.example.rnpt.connection.getpost.model.getid.ResponseInfo;
 public class FragmentOpenRNPT extends Fragment {
     String stringRNPT;
 
+    public FragmentOpenRNPT() {
+
+    }
+
     public FragmentOpenRNPT(String stringRNPT) {
         this.stringRNPT = stringRNPT;
     }
