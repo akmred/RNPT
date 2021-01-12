@@ -19,10 +19,25 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix = debugApplicationIdSuffix
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    flavorDimensions 'type_locate'
+    productFlavors {
+        withlocate {
+            dimension 'type_locate'
+            versionNameSuffix '.locate'
+        }
+        withoutlocate {
+            dimension 'type_locate'
+            versionNameSuffix '.noLocate'
+        }
     }
 }
 
@@ -43,6 +58,8 @@ dependencies {
     //gmap
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
+    //auth
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

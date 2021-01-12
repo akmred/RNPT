@@ -1,10 +1,8 @@
 package com.example.rnpt;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -17,30 +15,20 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.Switch;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rnpt.fragments.FragmentOpenRNPT;
+import com.example.rnpt.fragments.Fragment_auth_google;
 import com.example.rnpt.fragments.Fragment_list_rnpt;
 import com.example.rnpt.fragments.Fragment_master_token;
 import com.example.rnpt.fragments.Fragment_settings;
 import com.example.rnpt.receivers.BattetyReceiver;
 import com.example.rnpt.receivers.NoConnection;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
-import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,18 +36,26 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver batteryReceiver = new BattetyReceiver();
     private BroadcastReceiver noConnection = new NoConnection();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = initToolbar();
-        initDrawer(toolbar);
+//        Toolbar toolbar = initToolbar();
+        //initDrawer(toolbar);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
-        fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
+        Fragment_auth_google fragment_auth_google = new Fragment_auth_google(this);
+        fragmentTransaction.replace(R.id.context_main, fragment_auth_google);
         fragmentTransaction.commit();
         close_drawer();
+
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
+//        fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
+//        fragmentTransaction.commit();
+//        close_drawer();
 
         // Программная регистрация ресивера баттареи
         this.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_LOW));
@@ -68,6 +64,19 @@ public class MainActivity extends AppCompatActivity
 
         initGetToken();
         initNotificationChannel();
+
+    }
+
+    public void inLoggingGoogle(){
+
+        Toolbar toolbar = initToolbar();
+        initDrawer(toolbar);
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment_list_rnpt fragment_list_rnpt = new Fragment_list_rnpt(this);
+        fragmentTransaction.replace(R.id.context_main, fragment_list_rnpt);
+        fragmentTransaction.commit();
+        close_drawer();
 
     }
 

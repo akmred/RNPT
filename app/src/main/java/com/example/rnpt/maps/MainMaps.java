@@ -1,12 +1,9 @@
 package com.example.rnpt.maps;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.location.Address;
@@ -17,8 +14,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.example.rnpt.R;
-import com.example.rnpt.fragments.Fragment_settings;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
